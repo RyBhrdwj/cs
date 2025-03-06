@@ -632,6 +632,23 @@ Implementation of show()
   - Example: A `Car` class with `Engine` objects. If the `Car` is destroyed, the `Engine` is also destroyed.
 - **Classification Hierarchies**: Typically refers to inheritance hierarchies (generalization/specialization).
 
+ ### **Composition in C++**  
+
+#### **Definition**  
+**Composition** is a strong form of association where one class **contains and owns** another class. The **contained object’s lifecycle is bound to the containing object**, meaning it is created and destroyed along with the container.  
+
+---
+
+### **Composition vs. Aggregation vs. Inheritance**  
+
+| Feature        | **Composition** | **Aggregation** | **Inheritance** |
+|---------------|---------------|---------------|--------------|
+| Relationship  | **Has-a (Strong)** | **Has-a (Weak)** | **Is-a** |
+| Ownership     | Strong (object belongs to the container) | Weak (object can exist independently) | Inherits base class properties |
+| Lifespan      | Contained object is destroyed with container | Contained object can outlive container | Derived class exists as long as needed |
+| Coupling      | High (tight coupling) | Loose coupling | Tight coupling |
+| Flexibility   | Low | High | Low |
+
 ---
 
 ## 14. Final Tips
