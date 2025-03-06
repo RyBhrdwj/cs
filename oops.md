@@ -362,6 +362,60 @@ int main() {
 
 ```
 
+### **Diamond Problem**
+
+- The Diamond Problem occurs in multiple inheritance when a derived class inherits from two base classes that both inherit from a common base, causing ambiguity due to multiple copies of the base class.
+- A **virtual base class** is used in **multiple inheritance** to **avoid the "Diamond Problem"**, ensuring only **one copy** of the base class is inherited.
+
+---
+
+#### **Diamond Problem (Without Virtual Base Class)**
+```cpp
+#include <iostream>
+using namespace std;
+
+class A {
+public:
+    void show() { cout << "Class A\n"; }
+};
+
+class B : public A {};  
+class C : public A {};  
+class D : public B, public C {};  // D inherits B and C (causes ambiguity)
+
+int main() {
+    D obj;
+    obj.show();  // ERROR: Ambiguous (two copies of A)
+}
+```
+❌ **Error:** `request for 'show' is ambiguous`
+
+---
+
+#### **Solution: Using Virtual Base Class**
+```cpp
+#include <iostream>
+using namespace std;
+
+class A {
+public:
+    void show() { cout << "Class A\n"; }
+};
+
+class B : virtual public A {};  // Virtual inheritance
+class C : virtual public A {};  
+class D : public B, public C {};  // Only one copy of A exists
+
+int main() {
+    D obj;
+    obj.show();  // Works fine, no ambiguity
+}
+```
+✅ **Output:**  
+```
+Class A
+```
+
 ### Access Modes: public, private, protected
 - **public**: Public members of the base become public in the derived class.
 - **protected**: Public members of the base become protected in the derived class.
