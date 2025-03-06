@@ -367,6 +367,11 @@ int main() {
 - **protected**: Public members of the base become protected in the derived class.
 - **private**: Public and protected members of the base become private in the derived class.
 
+### Method Hiding in Derived Classes (C++ Behaviour)
+If a derived class defines a method with the same name as a method in its base class without virtual, the base class method gets hidden rather than overridden.
+
+
+
 ---
 
 ## 8. Ambiguity in Inheritance and Virtual Base Classes
