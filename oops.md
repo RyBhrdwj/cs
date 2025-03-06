@@ -1,9 +1,5 @@
 # Object-Oriented Programming (OOP) Notes
 
-These notes are based on the syllabus outline provided. Use them as a structured guide to revise the key concepts before your mid-semester exam.
-
----
-
 ## Table of Contents
 1. [Review of C and Difference Between C and C++](#review-of-c-and-difference-between-c-and-c)
 2. [Procedure-Oriented vs. Object-Oriented Approach](#procedure-oriented-vs-object-oriented-approach)
