@@ -450,7 +450,10 @@ int main() {
 ---
 
 ## 12. Abstract Classes
-- **Definition**: A class that cannot be instantiated and often contains at least one pure virtual function.
+- **Definition**: A class that **cannot** be instantiated and contains at least one **pure virtual function**.
+- In C++, abstraction can be achieved using:  
+   1. **Abstract Classes** (using pure virtual functions)  
+   2. **Interfaces** (fully abstract classes with only pure virtual functions)
 - **Syntax**:
   ```cpp
   class AbstractClass {
@@ -461,6 +464,110 @@ int main() {
 - **Purpose**: To define an interface or a base class that other classes must implement.
 - **Example**: `Shape` class with a pure virtual `draw()` method. Specific shapes (Circle, Rectangle) implement `draw()`.
 
+---
+
+#### **Key Features of Abstraction**  
+- **Simplifies Code**: Hides unnecessary details and provides a clear interface.  
+- **Encapsulation**: Works together with encapsulation by restricting direct access to implementation details.  
+- **Enforces Consistency**: Ensures that all derived classes follow a standard structure.
+
+---
+
+#### **1. Pure Virtual Functions**  
+A **pure virtual function** is a function that **must be overridden** in derived classes. It is declared using `= 0` in the base class.  
+```cpp
+class AbstractClass {
+public:
+    virtual void pureFunction() = 0; // Pure virtual function
+};
+```
+Any class **containing at least one pure virtual function** is an **abstract class**.
+
+---
+
+Example:  
+```cpp
+#include <iostream>
+using namespace std;
+
+class Shape {  // Abstract Class
+public:
+    virtual void draw() = 0;  // Pure virtual function
+};
+
+class Circle : public Shape {
+public:
+    void draw() override {  // Must override draw()
+        cout << "Drawing Circle\n";
+    }
+};
+
+class Rectangle : public Shape {
+public:
+    void draw() override {
+        cout << "Drawing Rectangle\n";
+    }
+};
+
+int main() {
+    // Shape s;  // ❌ Error: Cannot instantiate abstract class
+    Shape* s1 = new Circle();
+    Shape* s2 = new Rectangle();
+
+    s1->draw();  // ✅ "Drawing Circle"
+    s2->draw();  // ✅ "Drawing Rectangle"
+
+    delete s1;
+    delete s2;
+}
+```
+
+---
+
+#### **2. Abstract Class vs Interface**  
+| Feature              | Abstract Class          | Interface (Pure Abstract Class) |
+|----------------------|------------------------|--------------------------------|
+| **Contains Data Members?** | Yes | No |
+| **Constructors?**    | Yes | No |
+| **Implementation Allowed?** | Yes (normal + virtual functions) | No (only pure virtual functions) |
+| **Multiple Inheritance?** | Single + Multiple | Only Multiple |
+
+Example of **Interface-style** abstraction (only pure virtual functions):  
+```cpp
+class IShape {  // Interface
+public:
+    virtual void draw() = 0; // Must be overridden
+};
+```
+---
+
+#### **3. Can an Abstract Class Have a Constructor?**  
+Yes, an abstract class **can have a constructor**, but it **cannot be instantiated directly**. The constructor is called when an object of a derived class is created.
+
+```cpp
+class AbstractClass {
+public:
+    AbstractClass() { cout << "AbstractClass Constructor\n"; }
+    virtual void show() = 0;
+};
+
+class Derived : public AbstractClass {
+public:
+    Derived() { cout << "Derived Constructor\n"; }
+    void show() override { cout << "Implementation of show()\n"; }
+};
+
+int main() {
+    Derived d;
+    d.show();
+}
+```
+**Output:**  
+```
+AbstractClass Constructor  
+Derived Constructor  
+Implementation of show()  
+```
 ---
 
 ## 13. Aggregation and Composition vs. Classification Hierarchies
