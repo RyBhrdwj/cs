@@ -32,7 +32,7 @@ These notes are based on the syllabus outline provided. Use them as a structured
    - [Array of Objects](#array-of-objects)
    - [Constant Member Functions and Objects](#constant-member-functions-and-objects)
    - [Memory Management Operators](#memory-management-operators)
-7. [Inheritance and Types of Inheritance](#inheritance-and-types-of-inheritance)
+7. [Inheritance and Types of Inheritance](#7-inheritance-and-types-of-inheritance)
    - [Access Modes: public, private, protected](#access-modes-public-private-protected)
 8. [Ambiguity in Inheritance and Virtual Base Classes](#ambiguity-in-inheritance-and-virtual-base-classes)
 9. [Overriding Inheritance Methods](#overriding-inheritance-methods)
@@ -306,6 +306,65 @@ public:
 3. **Hierarchical Inheritance**: One base class, multiple derived classes.
 4. **Multilevel Inheritance**: Derived class becomes a base class for another class (chain).
 5. **Hybrid (Virtual) Inheritance**: Combination of multiple and multilevel inheritance.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+// Base class (Single Inheritance)
+class A {
+public:
+    void showA() { cout << "Class A\n"; }
+};
+
+// Single Inheritance (B inherits A)
+class B : public A {
+public:
+    void showB() { cout << "Class B\n"; }
+};
+
+// Multiple Inheritance (C inherits from A and B)
+class C : public A, public B {
+public:
+    void showC() { cout << "Class C\n"; }
+};
+
+// Multilevel Inheritance (D inherits B, which inherits A)
+class D : public B {
+public:
+    void showD() { cout << "Class D\n"; }
+};
+
+// Hierarchical Inheritance (E and F both inherit from A)
+class E : public A {
+public:
+    void showE() { cout << "Class E\n"; }
+};
+
+class F : public A {
+public:
+    void showF() { cout << "Class F\n"; }
+};
+
+// Hybrid Inheritance (G uses multiple and multilevel)
+class G : public C, public D {
+public:
+    void showG() { cout << "Class G\n"; }
+};
+
+int main() {
+    A a;  a.showA();
+    B b;  b.showA(); b.showB();
+    C c;  c.showB(); c.showC();
+    D d;  d.showA(); d.showB(); d.showD();
+    E e;  e.showA(); e.showE();
+    F f;  f.showA(); f.showF();
+    G g;  g.showB(); g.showC(); g.showD(); g.showG(); // Note: A appears twice in G (Diamond Problem)
+
+    return 0;
+}
+
+```
 
 ### Access Modes: public, private, protected
 - **public**: Public members of the base become public in the derived class.
