@@ -38,7 +38,7 @@ These notes are based on the syllabus outline provided. Use them as a structured
 9. [Overriding Inheritance Methods](#overriding-inheritance-methods)
 10. [Constructors in Derived Classes](#constructors-in-derived-classes)
 11. [Nesting of Classes](#nesting-of-classes)
-12. [Abstract Classes](#abstract-classes)
+12. [Abstract Classes](#12-abstract-classes)
 13. [Aggregation and Composition vs. Classification Hierarchies](#aggregation-and-composition-vs-classification-hierarchies)
 14. [Final Tips](#final-tips)
 
