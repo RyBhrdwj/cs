@@ -35,7 +35,7 @@
 10. [Constructors in Derived Classes](#constructors-in-derived-classes)
 11. [Nesting of Classes](#nesting-of-classes)
 12. [Abstract Classes](#12-abstract-classes)
-13. [Aggregation and Composition vs. Classification Hierarchies](#aggregation-and-composition-vs-classification-hierarchies)
+13. [Aggregation and Composition vs. Classification Hierarchies](#13-aggregation-and-composition-vs-classification-hierarchies)
 14. [Final Tips](#final-tips)
 
 ---
