@@ -122,6 +122,7 @@
 - [Disjoint Set Union (DSU)](#disjoint-set-union)
 - [Path Compression](#path-compression)
 - [Union by Rank](#union-by-rank)
+- [Union by Size](#union-by-size)
 - [Applications in Graphs](#applications-in-graphs)
 
 ---
