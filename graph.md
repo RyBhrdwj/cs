@@ -29,7 +29,6 @@
 ## 2. Graph Representations
 - [Adjacency Matrix](#adjacency-matrix)
 - [Adjacency List](#adjacency-list)
-- [Incidence Matrix](#incidence-matrix)
 
 ---
 
@@ -261,4 +260,47 @@ A graph in which all cycles of four or more vertices have a chord (an edge that 
 
 ### Line Graph
 A graph formed by representing the edges of an original graph as vertices.
+
+------
+
+# Graph Representations
+
+## Adjacency Matrix
+A **V × V** matrix where each cell **(i, j)** represents an edge weight or presence between node **i** and **j**.
+
+### Properties:
+- Space Complexity: **O(V²)**
+- Best for dense graphs.
+- Checking edge existence: **O(1)**
+- Iterating neighbors: **O(V)**
+
+### Example:
+```
+  0  1  2  3
+0 0  1  0  1
+1 1  0  1  0
+2 0  1  0  1
+3 1  0  1  0
+```
+
+---
+
+## Adjacency List
+A list where each vertex has an array of connected vertices.
+
+### Properties:
+- Space Complexity: **O(V + E)**
+- Best for sparse graphs.
+- Checking edge existence: **O(V)**
+- Iterating neighbors: **O(E)**
+
+### Example:
+```
+0 -> [1, 3]
+1 -> [0, 2]
+2 -> [1, 3]
+3 -> [0, 2]
+```
+
+---
 
