@@ -139,18 +139,6 @@
 - [Dynamic Connectivity (Union-Find with Path Compression)](#dynamic-connectivity)
 - [Dynamic Shortest Path (Dijkstra’s with Lazy Updates)](#dynamic-shortest-path)
 
----
-
-## 18. Cycle Detection Methods
-###Undirected Graphs:
-  - DFS-based cycle detection
-  - Union-Find method
-  
-###Directed Graphs:
- - DFS with recursion stack
- - Kahn Algorithm (Topological Sorting)
-
-
 ------------
 
 
