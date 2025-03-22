@@ -290,5 +290,72 @@ A list where each vertex has an array of connected vertices.
 3 -> [0, 2]
 ```
 
----
+------
 
+# 15. Union-Find Data Structure
+### Disjoint Set Union (DSU)
+A data structure to manage disjoint sets efficiently, used for cycle detection and connected components.
+- **Operations:** Find, Union
+- **Applications:** Kruskal's MST, Connected Components
+
+### Path Compression
+- Optimizes the `find` operation by making every node point directly to the root.
+- **Time Complexity:** O(α(N)) (inverse Ackermann function, nearly constant)
+
+#### Pseudo Code:
+```cpp
+int find(int x) {
+    if (parent[x] == x) return x;
+    return parent[x] = find(parent[x]); // Path compression
+}
+```
+
+### Union by Rank
+- **What is Rank?** Rank represents an estimate of tree height.
+- **Default Value:** Initially, all nodes have rank 0.
+- **How It Increases:** Rank only increases when two trees of the same rank are merged.
+- **Balancing Strategy:** Attach the tree with a lower rank under the tree with a higher rank.
+
+#### Pseudo Code:
+```cpp
+void unionSet(int x, int y) {
+    int rootX = find(x);
+    int rootY = find(y);
+    if (rootX != rootY) {
+        if (rank[rootX] > rank[rootY]) parent[rootY] = rootX;
+        else if (rank[rootX] < rank[rootY]) parent[rootX] = rootY;
+        else { parent[rootY] = rootX; rank[rootX]++; }
+    }
+}
+```
+
+### Union by Size
+- **What is Size?** The number of nodes in a set.
+- **Default Value:** Each node starts with size 1.
+- **How It Increases:** The parent node accumulates the size of the merged tree.
+- **Balancing Strategy:** Attach the smaller tree under the larger tree.
+
+#### Pseudo Code:
+```cpp
+void unionSet(int x, int y) {
+    int rootX = find(x);
+    int rootY = find(y);
+    if (rootX != rootY) {
+        if (size[rootX] > size[rootY]) {
+            parent[rootY] = rootX;
+            size[rootX] += size[rootY];
+        } else {
+            parent[rootX] = rootY;
+            size[rootY] += size[rootX];
+        }
+    }
+}
+```
+
+### Applications in Graphs
+1. **Cycle Detection in an Undirected Graph**
+   - Check if two nodes are in the same set before merging.
+2. **Kruskal's Algorithm for MST**
+   - Sort edges and use DSU to build the Minimum Spanning Tree.
+3. **Connected Components**
+   - Group nodes into sets to determine connectivity.
