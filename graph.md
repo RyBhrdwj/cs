@@ -293,7 +293,7 @@ A list where each vertex has an array of connected vertices.
 ------
 
 # 15. Union-Find Data Structure
-### Disjoint Set Union (DSU)
+### Disjoint Set Union
 A data structure to manage disjoint sets efficiently, used for cycle detection and connected components.
 - **Operations:** Find, Union
 - **Applications:** Kruskal's MST, Connected Components
