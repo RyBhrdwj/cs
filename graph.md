@@ -155,11 +155,6 @@
 ------------
 
 
-
-------------
-
-
-
 # Basics of Graphs
 
 ## Graph (G = V, E)
@@ -221,3 +216,49 @@ The **diameter** of a graph is the longest shortest path between any two vertice
 - **Computation:**
   - **Unweighted Graphs:** BFS from all nodes → O(VE) complexity
   - **Weighted Graphs:** Floyd-Warshall (O(V³)) or Dijkstra’s Algorithm (O(E log V))
+
+---
+
+## Types of Graphs
+
+### Simple Graph
+A graph with no loops or multiple edges.
+
+### Multi-Graph and Pseudo-Graph
+- **Multi-Graph:** A graph that allows multiple edges between the same pair of vertices.
+- **Pseudo-Graph:** A multi-graph that also allows loops.
+
+### Complete Graph (Kₙ)
+A graph in which every pair of distinct vertices is connected by a unique edge.
+- **Number of edges:** \( E = \frac{n(n-1)}{2} \) for an undirected graph.
+
+### Bipartite Graph
+A graph whose vertices can be divided into two disjoint sets such that no two graph vertices within the same set are adjacent.
+
+### Cyclic and Acyclic Graph
+- **Cyclic Graph:** Contains at least one cycle.
+- **Acyclic Graph:** Does not contain any cycles.
+  - **DAG (Directed Acyclic Graph):** A directed graph with no cycles.
+
+### Subgraph, Induced Subgraph
+- **Subgraph:** A subset of vertices and edges from a graph.
+- **Induced Subgraph:** A subgraph formed by selecting vertices and including all edges between them from the original graph.
+
+### Regular Graph
+A graph where each vertex has the same degree.
+- **k-Regular Graph:** Every vertex has exactly k edges.
+
+### Planar Graph
+A graph that can be drawn on a plane without edges crossing.
+- **Euler's Formula:** For a connected planar graph, \( V - E + F = 2 \), where F is the number of faces.
+
+### Eulerian and Hamiltonian Graph
+- **Eulerian Graph:** A graph containing an Eulerian circuit (a cycle that visits every edge exactly once).
+- **Hamiltonian Graph:** A graph containing a Hamiltonian cycle (a cycle that visits every vertex exactly once).
+
+### Chordal Graph
+A graph in which all cycles of four or more vertices have a chord (an edge that connects two non-adjacent vertices in the cycle).
+
+### Line Graph
+A graph formed by representing the edges of an original graph as vertices.
+
