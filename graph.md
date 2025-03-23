@@ -370,6 +370,100 @@ vector<int> dfsTopoSort(int V, vector<vector<int>>& adj) {
 **Space Complexity:** O(V)
 
 ------
+# 11. Eulerian and Hamiltonian Paths
+
+## **Eulerian Path and Circuit**
+
+An **Eulerian Path** in a graph is a path that visits every edge **exactly once**. It does not necessarily **return to the starting vertex**.
+
+### **Conditions for Eulerian Path**
+
+- **Undirected Graph**: An Eulerian path exists **if and only if**:
+  - At most **two vertices** have **odd degree** (these must be the start and end points).
+  - The graph is **connected** (ignoring isolated nodes).
+- **Directed Graph**: An Eulerian path exists **if and only if**:
+  - At most **one vertex** has **out-degree = in-degree + 1** (start point).
+  - At most **one vertex** has **in-degree = out-degree + 1** (end point).
+  - All other vertices have equal in-degree and out-degree.
+  - The graph is **strongly connected**.
+
+## **Eulerian Circuit**
+
+An **Eulerian Circuit** (or Eulerian Cycle) is an Eulerian Path that **starts and ends at the same vertex**.
+
+### **Conditions for Eulerian Circuit**
+
+- **Undirected Graph**: An Eulerian circuit exists **if and only if**:
+  - **All vertices have even degree**.
+  - The graph is **connected**.
+- **Directed Graph**: An Eulerian circuit exists **if and only if**:
+  - Every vertex has **equal in-degree and out-degree**.
+  - The graph is **strongly connected**.
+
+### **Fleury’s Algorithm**
+
+Fleury’s Algorithm is a simple approach to finding an Eulerian path or circuit.
+
+1. **Check conditions**: Ensure the graph has at most two odd-degree vertices.
+2. **Choose a valid start node**:
+   - If an Eulerian circuit exists, start from any vertex.
+   - If an Eulerian path exists, start from an odd-degree vertex.
+3. **Traverse edges carefully**:
+   - At each step, choose an edge that doesn’t disconnect the graph unless it’s the last available edge.
+   - Remove the edge from the graph after traversing.
+4. **Continue until all edges are visited**.
+
+### **Hierholzer’s Algorithm (Efficient Approach)**
+
+1. Start from a vertex with an **odd degree** (or any vertex if none exist).
+2. Perform a **DFS-like traversal**, removing edges as you go.
+3. If stuck, backtrack to the last junction and continue.
+4. Store the path and reverse it at the end.
+
+### **Time Complexity:**
+
+- Fleury’s Algorithm: O(E²) (Checking for bridges takes O(E)).
+- Hierholzer’s Algorithm: O(V + E) (Using stack instead of recursion avoids deep call stacks).
+
+## **Hamiltonian Path and Circuit**
+
+A **Hamiltonian Path** is a path in a graph that visits every vertex **exactly once**.
+A **Hamiltonian Circuit** is a Hamiltonian Path that starts and ends at the **same vertex**.
+
+### **Conditions for Hamiltonian Path and Circuit**
+
+There is **no simple necessary and sufficient condition** like Eulerian graphs, but some useful theorems include:
+
+- **Dirac’s Theorem**: If every vertex in an **n-vertex simple graph** has degree ≥ n/2, then a **Hamiltonian Circuit** exists.
+- **Ore’s Theorem**: If deg(u) + deg(v) ≥ n for every pair of non-adjacent vertices (u, v), then a **Hamiltonian Circuit** exists.
+
+### **Backtracking Approach for Finding Hamiltonian Paths**
+
+1. Start from any vertex and mark it as visited.
+2. Try visiting each unvisited adjacent vertex.
+3. If all vertices are visited exactly once and we return to the starting point, we found a Hamiltonian Circuit.
+4. If stuck, backtrack and try a different path.
+
+### **Time Complexity:**
+
+- Backtracking: **O(N!)** in the worst case.
+- Dynamic Programming (Held-Karp Algorithm): **O(2^N \* N²)** for **TSP-type** problems.
+
+## **Comparison: Eulerian vs. Hamiltonian Paths**
+
+| Property                | Eulerian Path                                                       | Hamiltonian Path                                 |
+| ----------------------- | ------------------------------------------------------------------- | ------------------------------------------------ |
+| Visits                  | Every **edge** exactly once                                         | Every **vertex** exactly once                    |
+| Conditions (Undirected) | At most **2 odd-degree** vertices                                   | No general condition (Dirac, Ore’s theorem help) |
+| Conditions (Directed)   | 1 vertex with out-degree > in-degree, 1 with in-degree > out-degree | No general condition                             |
+| Circuit Exists When     | All vertices have **even degree**                                   | Exists if a Hamiltonian path forms a cycle       |
+
+## **Applications**
+
+- **Eulerian Paths**: DNA sequencing, network routing, drawing with a single stroke.
+- **Hamiltonian Paths**: Traveling Salesman Problem (TSP), scheduling, route optimization.
+
+------
 
 # 15. Union-Find Data Structure
 ### Disjoint Set Union
