@@ -293,6 +293,84 @@ A list where each vertex has an array of connected vertices.
 
 ------
 
+## 8. Topological Sorting
+### Kahn’s Algorithm (BFS-Based)
+A **BFS-based** method to find a valid topological ordering of a DAG.
+
+#### Algorithm:
+1. Compute the **in-degree** of each node.
+2. Push all nodes with **in-degree = 0** into a queue.
+3. While the queue is not empty:
+   - Pop a node, add it to the topological order.
+   - Reduce the in-degree of its neighbors.
+   - If a neighbor’s in-degree becomes 0, push it into the queue.
+4. If all nodes are processed, the topological order is valid; otherwise, a cycle exists.
+
+#### Pseudo Code:
+```cpp
+vector<int> kahnTopoSort(int V, vector<vector<int>>& adj) {
+    vector<int> in_degree(V, 0), topo_order;
+    queue<int> q;
+    
+    for (int u = 0; u < V; u++)
+        for (int v : adj[u]) in_degree[v]++;
+    
+    for (int i = 0; i < V; i++)
+        if (in_degree[i] == 0) q.push(i);
+    
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        topo_order.push_back(u);
+        for (int v : adj[u])
+            if (--in_degree[v] == 0) q.push(v);
+    }
+    return (topo_order.size() == V) ? topo_order : vector<int>(); // Empty if cycle exists
+}
+```
+
+**Time Complexity:** O(V + E)
+**Space Complexity:** O(V)
+
+---
+
+### DFS-Based Topological Sorting
+A **DFS-based** method to find a valid topological ordering of a DAG.
+
+#### Algorithm:
+1. Initialize a **visited** array and an empty **stack**.
+2. Perform **DFS** on unvisited nodes, pushing nodes to the stack **after** visiting all descendants.
+3. The stack contains the topological order in reverse order.
+
+#### Pseudo Code:
+```cpp
+void dfs(int node, vector<vector<int>>& adj, vector<bool>& visited, stack<int>& st) {
+    visited[node] = true;
+    for (int v : adj[node]) {
+        if (!visited[v]) dfs(v, adj, visited, st);
+    }
+    st.push(node);
+}
+
+vector<int> dfsTopoSort(int V, vector<vector<int>>& adj) {
+    vector<bool> visited(V, false);
+    stack<int> st;
+    for (int i = 0; i < V; i++)
+        if (!visited[i]) dfs(i, adj, visited, st);
+    
+    vector<int> topo_order;
+    while (!st.empty()) {
+        topo_order.push_back(st.top());
+        st.pop();
+    }
+    return topo_order;
+}
+```
+
+**Time Complexity:** O(V + E)
+**Space Complexity:** O(V)
+
+------
+
 # 15. Union-Find Data Structure
 ### Disjoint Set Union
 A data structure to manage disjoint sets efficiently, used for cycle detection and connected components.
