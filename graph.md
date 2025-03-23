@@ -218,7 +218,7 @@ A graph with no loops or multiple edges.
 
 ### Complete Graph (Kₙ)
 A graph in which every pair of distinct vertices is connected by a unique edge.
-- **Number of edges:** \( E = \frac{n(n-1)}{2} \) for an undirected graph.
+- **Number of edges:** \( $$E = \frac{n(n-1)}{2}$$ \) for an undirected graph.
 
 ### Bipartite Graph
 A graph whose vertices can be divided into two disjoint sets such that no two graph vertices within the same set are adjacent.
