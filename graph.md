@@ -377,6 +377,21 @@ A data structure to manage disjoint sets efficiently, used for cycle detection a
 - **Operations:** Find, Union
 - **Applications:** Kruskal's MST, Connected Components
 
+#### Abstract Implementation
+```cpp
+class AbstractDSU {
+    std::vector<int> parent, rank, size;
+
+public:
+    AbstractDSU(int n) : parent(n), rank(n, 0), size(n, 1) {
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+
+    virtual int find(int x) = 0;
+    virtual void unite(int x, int y) = 0;
+};
+```
+
 ### Path Compression
 - Optimizes the `find` operation by making every node point directly to the root.
 - **Time Complexity:** O(α(N)) (inverse Ackermann function, nearly constant)
