@@ -293,7 +293,7 @@ A list where each vertex has an array of connected vertices.
 
 ------
 
-## 8. Topological Sorting
+# 8. Topological Sorting
 ### Kahn’s Algorithm (BFS-Based)
 A **BFS-based** method to find a valid topological ordering of a DAG.
 
