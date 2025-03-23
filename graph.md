@@ -143,7 +143,7 @@
 ------------
 
 
-# Basics of Graphs
+# 1. Basics of Graphs
 
 ## Graph (G = V, E)
 A **graph** is a collection of vertices (V) and edges (E) connecting them.
@@ -252,7 +252,7 @@ A graph formed by representing the edges of an original graph as vertices.
 
 ------
 
-# Graph Representations
+# 2. Graph Representations
 
 ## Adjacency Matrix
 A **V × V** matrix where each cell **(i, j)** represents an edge weight or presence between node **i** and **j**.
