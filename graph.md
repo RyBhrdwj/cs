@@ -71,7 +71,7 @@
 ---
 
 ## 8. Topological Sorting
-- [Kahn’s Algorithm (BFS-Based)](#kahns-algorithm)
+- [Kahn’s Algorithm (BFS-Based)](#kahns-algorithm-bfs-based)
 - [DFS-Based Topological Sorting](#dfs-based-topological-sorting)
 
 ---
