@@ -293,6 +293,143 @@ A list where each vertex has an array of connected vertices.
 
 ------
 
+# 5. Minimum Spanning Tree (MST) Algorithms
+
+## Properties of MST
+- A **Minimum Spanning Tree (MST)** is a subgraph of a connected, undirected graph that:
+  - Connects all vertices with the **minimum possible total edge weight**.
+  - Has **n - 1 edges** for **n nodes**.
+  - Does **not contain cycles**.
+- There can be **multiple MSTs** for the same graph.
+- Used in **network design, clustering, circuit design, and more**.
+
+## MST Formula
+- Let **G(V, E)** be a weighted connected graph where:
+  - **V** = set of vertices.
+  - **E** = set of edges with weights.
+- MST is a subset **T ⊆ E** such that:
+  - **|T| = n - 1** (where `n` is the number of vertices).
+  - **Sum of edge weights in T is minimized**.
+
+---
+
+## Kruskal’s Algorithm (Greedy Approach)
+### Algorithm:
+1. **Sort all edges** in ascending order of weight.
+2. **Initialize a Union-Find (Disjoint Set)** data structure.
+3. **Iterate through the sorted edges**:
+   - If adding an edge does **not** create a cycle, **include it** in MST.
+   - **(Adding an edge creates a cycle if both of nodes have the same parent)**
+   - Use **Union-Find** to detect cycles.
+4. **Stop when MST has `n - 1` edges**.
+
+### Time Complexity:
+- **O(E log E)** due to edge sorting and union-find operations.
+
+### C++ Pseudo Code:
+```cpp
+struct Edge {
+    int u, v, weight;
+};
+
+bool compare(Edge a, Edge b) {
+    return a.weight < b.weight;
+}
+
+int findParent(int node, vector<int> &parent) {
+    if (parent[node] == node) return node;
+    return parent[node] = findParent(parent[node], parent);
+}
+
+void unionNodes(int u, int v, vector<int> &parent, vector<int> &rank) {
+    int rootU = findParent(u, parent);
+    int rootV = findParent(v, parent);
+    if (rootU != rootV) {
+        if (rank[rootU] > rank[rootV]) parent[rootV] = rootU;
+        else if (rank[rootU] < rank[rootV]) parent[rootU] = rootV;
+        else {
+            parent[rootV] = rootU;
+            rank[rootU]++;
+        }
+    }
+}
+
+int kruskalMST(vector<Edge> &edges, int n) {
+    sort(edges.begin(), edges.end(), compare);
+    vector<int> parent(n), rank(n, 0);
+    for (int i = 0; i < n; i++) parent[i] = i;
+
+    int minCost = 0, edgesUsed = 0;
+    for (Edge &edge : edges) {
+        if (findParent(edge.u, parent) != findParent(edge.v, parent)) {
+            unionNodes(edge.u, edge.v, parent, rank);
+            minCost += edge.weight;
+            edgesUsed++;
+            if (edgesUsed == n - 1) break;
+        }
+    }
+    return minCost;
+}
+```
+---
+
+## Prim’s Algorithm (Greedy Approach)
+### Algorithm:
+1. **Select any node** as the starting point.
+2. **Use a Min-Heap (Priority Queue)** to always pick the smallest edge that expands the MST.
+3. **Mark the current node as visited** and add valid edges to the priority queue.
+4. **Repeat until all nodes are included** in the MST.
+
+### Time Complexity:
+- **O((V + E) log V)** using a priority queue.
+
+### C++ Pseudo Code:
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int primMST(vector<vector<pair<int, int>>> &graph, int n) {
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
+    vector<bool> inMST(n, false);
+    int minCost = 0;
+
+    minHeap.push({0, 0}); // {weight, node}
+
+    while (!minHeap.empty()) {
+        auto [weight, u] = minHeap.top();
+        minHeap.pop();
+        
+        if (inMST[u]) continue;
+        inMST[u] = true;
+        minCost += weight;
+
+        for (auto &[v, w] : graph[u]) {
+            if (!inMST[v]) minHeap.push({w, v});
+        }
+    }
+    return minCost;
+}
+```
+
+---
+
+## Differences Between Kruskal’s and Prim’s Algorithms
+| Feature      | Kruskal’s Algorithm | Prim’s Algorithm |
+|-------------|--------------------|-----------------|
+| Approach    | Greedy, Edge-based | Greedy, Node-based |
+| Data Structure | Union-Find + Sorting | Priority Queue (Min-Heap) |
+| Best for | Sparse Graphs (E ≈ V) | Dense Graphs (E ≈ V²) |
+| Time Complexity | O(E log E) | O((V + E) log V) |
+
+---
+
+## Conclusion
+- **Use Kruskal’s when edges are fewer and sorting edges is efficient.**
+- **Use Prim’s when there are many edges and priority queue optimizations help.**
+- Both are fundamental MST algorithms used in network design, clustering, and graph-based optimizations.
+
+------
+
 # 8. Topological Sorting
 ### Kahn’s Algorithm (BFS-Based)
 A **BFS-based** method to find a valid topological ordering of a DAG.
