@@ -325,47 +325,28 @@ A list where each vertex has an array of connected vertices.
 
 ### Time Complexity:
 - **O(E log E)** due to edge sorting and union-find operations.
-
+  
 ### C++ Pseudo Code:
 ```cpp
 struct Edge {
     int u, v, weight;
+    bool operator<(const Edge &e) const { return weight < e.weight; }
 };
 
-bool compare(Edge a, Edge b) {
-    return a.weight < b.weight;
-}
+// Abstract DSU class
+class DSU {
+public:
+    virtual int find(int node) = 0;
+    virtual bool unionByRank(int u, int v) = 0;
+};
 
-int findParent(int node, vector<int> &parent) {
-    if (parent[node] == node) return node;
-    return parent[node] = findParent(parent[node], parent);
-}
-
-void unionNodes(int u, int v, vector<int> &parent, vector<int> &rank) {
-    int rootU = findParent(u, parent);
-    int rootV = findParent(v, parent);
-    if (rootU != rootV) {
-        if (rank[rootU] > rank[rootV]) parent[rootV] = rootU;
-        else if (rank[rootU] < rank[rootV]) parent[rootU] = rootV;
-        else {
-            parent[rootV] = rootU;
-            rank[rootU]++;
-        }
-    }
-}
-
-int kruskalMST(vector<Edge> &edges, int n) {
-    sort(edges.begin(), edges.end(), compare);
-    vector<int> parent(n), rank(n, 0);
-    for (int i = 0; i < n; i++) parent[i] = i;
-
+int kruskalMST(vector<Edge> &edges, int n, DSU &dsu) {
+    sort(edges.begin(), edges.end());
     int minCost = 0, edgesUsed = 0;
-    for (Edge &edge : edges) {
-        if (findParent(edge.u, parent) != findParent(edge.v, parent)) {
-            unionNodes(edge.u, edge.v, parent, rank);
+    for (const auto &edge : edges) {
+        if (dsu.unionByRank(edge.u, edge.v)) {
             minCost += edge.weight;
-            edgesUsed++;
-            if (edgesUsed == n - 1) break;
+            if (++edgesUsed == n - 1) break;
         }
     }
     return minCost;
