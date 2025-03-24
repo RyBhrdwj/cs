@@ -313,7 +313,7 @@ A list where each vertex has an array of connected vertices.
 
 ---
 
-## Kruskal’s Algorithm (Greedy Approach)
+## Kruskal’s Algorithm
 ### Algorithm:
 1. **Sort all edges** in ascending order of weight.
 2. **Initialize a Union-Find (Disjoint Set)** data structure.
@@ -373,7 +373,7 @@ int kruskalMST(vector<Edge> &edges, int n) {
 ```
 ---
 
-## Prim’s Algorithm (Greedy Approach)
+## Prim’s Algorithm
 ### Algorithm:
 1. **Select any node** as the starting point.
 2. **Use a Min-Heap (Priority Queue)** to always pick the smallest edge that expands the MST.
