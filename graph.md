@@ -415,10 +415,23 @@ Fleury’s Algorithm is a simple approach to finding an Eulerian path or circuit
 
 ### **Hierholzer’s Algorithm (Efficient Approach)**
 
-1. Start from a vertex with an **odd degree** (or any vertex if none exist).
-2. Perform a **DFS-like traversal**, removing edges as you go.
-3. If stuck, backtrack to the last junction and continue.
-4. Store the path and reverse it at the end.
+1. Find the starting vertex  
+   - If Eulerian Circuit: Start from any vertex  
+   - If Eulerian Path: Start from an odd-degree vertex  
+
+2. Initialize a stack and a path list  
+
+3. Perform DFS traversal using the stack  
+   - While the stack is not empty:  
+     - If the current vertex has remaining edges:  
+       - Choose any connected vertex  
+       - Remove the edge from the graph  
+       - Push the next vertex onto the stack  
+     - Else:  
+       - Pop the vertex from the stack and add it to the path  
+
+4. Reverse the path list to get the correct Eulerian path or circuit  
+
 
 ### **Time Complexity:**
 
