@@ -58,8 +58,10 @@
 ---
 
 ## 6. Cycle Detection in Graphs
-- [Cycle Detection in Undirected Graphs](#cycle-detection-in-undirected-graphs)
-- [Cycle Detection in Directed Graphs (Using DFS)](#cycle-detection-in-directed-graphs)
+- **[Cycle Detection in Undirected Graphs](#cycle-detection-in-undirected-graphs)**
+  - BFS
+  - DFS
+- [Cycle Detection in Directed Graphs (Using DFS)](#cycle-detection-in-directed-graphs-using-dfs)
 - [Union-Find for Cycle Detection](#union-find-for-cycle-detection)
 
 ---
@@ -408,6 +410,160 @@ int primMST(vector<vector<pair<int, int>>> &graph, int n) {
 - **Use Kruskal’s when edges are fewer and sorting edges is efficient.**
 - **Use Prim’s when there are many edges and priority queue optimizations help.**
 - Both are fundamental MST algorithms used in network design, clustering, and graph-based optimizations.
+
+------
+
+# 6. Cycle Detection in Graphs
+
+## [Cycle Detection in Undirected Graphs](#cycle-detection-in-undirected-graphs)
+### BFS Approach
+#### Algorithm:
+1. Use a queue to perform BFS traversal.
+2. Maintain a `parent` array to track the parent node of each node.
+3. If a visited node appears again in BFS (excluding the parent), a cycle is detected.
+
+#### C++ Pseudocode:
+```cpp
+bool isCycleBFS(int src, vector<int> adj[], vector<bool> &visited) {
+    queue<pair<int, int>> q;
+    q.push({src, -1});
+    visited[src] = true;
+
+    while (!q.empty()) {
+        int node = q.front().first;
+        int parent = q.front().second;
+        q.pop();
+
+        for (auto neighbor : adj[node]) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                q.push({neighbor, node});
+            } else if (neighbor != parent) {
+                return true; // Cycle detected
+            }
+        }
+    }
+    return false;
+}
+```
+
+#### Time Complexity:
+- **O(V + E)**, where V = vertices, E = edges.
+
+---
+
+### DFS Approach
+#### Algorithm:
+1. Use DFS to traverse the graph.
+2. Keep track of visited nodes.
+3. If a visited node appears again (excluding the parent), a cycle is detected.
+
+#### C++ Pseudocode:
+```cpp
+bool isCycleDFS(int node, int parent, vector<int> adj[], vector<bool> &visited) {
+    visited[node] = true;
+    
+    for (auto neighbor : adj[node]) {
+        if (!visited[neighbor]) {
+            if (isCycleDFS(neighbor, node, adj, visited)) {
+                return true;
+            }
+        } else if (neighbor != parent) {
+            return true; // Cycle detected
+        }
+    }
+    return false;
+}
+```
+
+#### Time Complexity:
+- **O(V + E)**
+
+## [Cycle Detection in Directed Graphs (Using DFS)](#cycle-detection-in-directed-graphs)
+#### Algorithm:
+1. Use a `visited` array and a `recStack` (recursion stack) to track nodes in the current DFS path.
+2. If a node is visited and is present in the recursion stack, a cycle is detected.
+
+#### C++ Pseudocode:
+```cpp
+bool isCycleDFS(int node, vector<int> adj[], vector<bool> &visited, vector<bool> &recStack) {
+    visited[node] = true;
+    recStack[node] = true;
+    
+    for (auto neighbor : adj[node]) {
+        if (!visited[neighbor] && isCycleDFS(neighbor, adj, visited, recStack)) {
+            return true;
+        } else if (recStack[neighbor]) {
+            return true; // Cycle detected
+        }
+    }
+    
+    recStack[node] = false;
+    return false;
+}
+```
+
+#### Time Complexity:
+- **O(V + E)**
+
+## [Union-Find for Cycle Detection](#union-find-for-cycle-detection)
+#### Algorithm:
+1. Use the **Disjoint Set Union (DSU)** data structure.
+2. For each edge, check if the two vertices belong to the same set.
+3. If they do, a cycle is detected; otherwise, perform a union operation.
+
+#### C++ Pseudocode:
+```cpp
+class DSU {
+public:
+    vector<int> parent, rank;
+    
+    DSU(int n) {
+        parent.resize(n);
+        rank.resize(n, 0);
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+    
+    int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+    
+    bool unite(int x, int y) {
+        int rootX = find(x), rootY = find(y);
+        if (rootX == rootY) return false; // Cycle detected
+        
+        if (rank[rootX] > rank[rootY]) parent[rootY] = rootX;
+        else if (rank[rootX] < rank[rootY]) parent[rootX] = rootY;
+        else {
+            parent[rootY] = rootX;
+            rank[rootX]++;
+        }
+        return true;
+    }
+};
+
+bool isCycle(int n, vector<vector<int>> &edges) {
+    DSU dsu(n);
+    for (auto &edge : edges) {
+        if (!dsu.unite(edge[0], edge[1])) return true;
+    }
+    return false;
+}
+```
+
+#### Time Complexity:
+- **O(E α(V))**, where α is the inverse Ackermann function (almost constant).
+
+## Summary Table
+| Algorithm | Approach | Time Complexity |
+|-----------|----------|----------------|
+| BFS (Undirected) | Uses queue and parent tracking | O(V + E) |
+| DFS (Undirected) | Recursion with parent tracking | O(V + E) |
+| DFS (Directed) | Recursion stack tracking | O(V + E) |
+| Union-Find | DSU with path compression | O(E α(V)) |
 
 ------
 
