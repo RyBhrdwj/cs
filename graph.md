@@ -295,6 +295,133 @@ A list where each vertex has an array of connected vertices.
 
 ------
 
+# 4. Shortest Path Algorithms
+
+## [Dijkstra’s Algorithm (Single-Source Shortest Path)](#dijkstras-algorithm)
+
+### Algorithm:
+Dijkstra’s algorithm finds the shortest path from a single source node to all other nodes in a weighted graph (non-negative weights only).
+
+1. Initialize distances from the source to all vertices as infinity, except the source itself (0).
+2. Use a priority queue (min-heap) to select the vertex with the smallest distance.
+3. Update the distance of all adjacent vertices.
+4. Repeat until all vertices are processed.
+
+### Pseudocode (C++):
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define INF INT_MAX
+
+void dijkstra(int src, vector<pair<int, int>> adj[], int V) {
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    vector<int> dist(V, INF);
+    dist[src] = 0;
+    pq.push({0, src});
+
+    while (!pq.empty()) {
+        int u = pq.top().second;
+        pq.pop();
+
+        for (auto [v, weight] : adj[u]) {
+            if (dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+    for (int i = 0; i < V; i++) cout << "Vertex " << i << " Distance: " << dist[i] << endl;
+}
+```
+
+### Time Complexity:
+- **O((V + E) log V)** using a priority queue.
+
+---
+
+## [Bellman-Ford Algorithm (Handles Negative Weights)](#bellman-ford-algorithm)
+
+### Algorithm:
+The Bellman-Ford algorithm computes the shortest path from a single source vertex to all others, even with negative weights (detects negative cycles).
+
+1. Initialize distances from the source to all vertices as infinity.
+2. Relax all edges **V - 1** times.
+3. Check for negative-weight cycles.
+
+### Pseudocode (C++):
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define INF INT_MAX
+
+void bellmanFord(int V, int E, vector<vector<int>> &edges, int src) {
+    vector<int> dist(V, INF);
+    dist[src] = 0;
+
+    for (int i = 0; i < V - 1; i++) {
+        for (auto edge : edges) {
+            int u = edge[0], v = edge[1], weight = edge[2];
+            if (dist[u] != INF && dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;
+            }
+        }
+    }
+
+    for (auto edge : edges) {
+        int u = edge[0], v = edge[1], weight = edge[2];
+        if (dist[u] != INF && dist[u] + weight < dist[v]) {
+            cout << "Negative weight cycle detected!" << endl;
+            return;
+        }
+    }
+
+    for (int i = 0; i < V; i++) cout << "Vertex " << i << " Distance: " << dist[i] << endl;
+}
+```
+
+### Time Complexity:
+- **O(VE)**
+
+---
+
+## [Floyd-Warshall Algorithm (All-Pairs Shortest Path)](#floyd-warshall-algorithm)
+
+### Algorithm:
+The Floyd-Warshall algorithm finds the shortest paths between all pairs of nodes using dynamic programming.
+
+1. Create a distance matrix initialized with edge weights.
+2. Iterate over each intermediate vertex and update shortest paths.
+
+### Pseudocode (C++):
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+#define INF 1e9
+
+void floydWarshall(vector<vector<int>> &dist, int V) {
+    for (int k = 0; k < V; k++) {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (dist[i][k] < INF && dist[k][j] < INF)
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+            }
+        }
+    }
+
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            cout << (dist[i][j] == INF ? "INF" : to_string(dist[i][j])) << " ";
+        }
+        cout << endl;
+    }
+}
+```
+
+### Time Complexity:
+- **O(V³)**
+
+------
+
 # 5. Minimum Spanning Tree (MST) Algorithms
 
 ## Properties of MST
